@@ -9,12 +9,14 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 
+import static org.junit.Assert.assertTrue;
+
 public class BaseClass {
 
-    public static WebDriver driver;
+    private WebDriver driver;
 
     @BeforeClass
-    public static void setup()
+    public void setup()
     {
         Configuration.timeout = 10000;
         WebDriverManager.chromedriver().setup();
@@ -29,6 +31,14 @@ public class BaseClass {
     public void quit()
     {
         driver.quit();
+    }
+
+    public void urlShouldContain (String path) {
+        String currentURL = WebDriverRunner.url();
+        assertTrue(
+                String.format("url should contain %s but actuall full url is %s", path, currentURL),
+                currentURL.contains(path)
+        );
     }
 
 }
